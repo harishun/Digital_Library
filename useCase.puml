@@ -1,0 +1,45 @@
+@startuml LibraryManagementSystem
+left to right direction
+
+actor "User" as U
+actor "Librarian" as L
+actor "Library System" as S
+
+rectangle "Library Management System" {
+  ' User Use Cases
+  usecase "Register Account" as UC_Reg
+  usecase "Search Catalog" as UC_Search
+  usecase "Borrow Book" as UC_Borrow
+  usecase "Return Book" as UC_Return
+  usecase "Pay Fines" as UC_Pay
+  
+  ' Librarian Use Cases
+  usecase "Manage Inventory" as UC_Inv
+  usecase "Add Book" as UC_Add
+  usecase "Remove Book" as UC_Rem
+  usecase "Edit Book" as UC_Edit
+
+  ' System Use Cases
+  usecase "Send Notifications" as UC_Notify
+  usecase "Generate Reports" as UC_Report
+}
+
+' User interactions
+U --> UC_Reg
+U --> UC_Search
+U --> UC_Borrow
+U --> UC_Return
+
+' Librarian interactions
+L --> UC_Inv
+UC_Inv ..> UC_Add : <<include>>
+UC_Inv ..> UC_Rem : <<include>>
+UC_Inv ..> UC_Edit : <<include>>
+
+' System interactions
+S --> UC_Notify
+S --> UC_Report
+
+' Relationships
+UC_Return ..> UC_Pay : <<extend>>
+@enduml

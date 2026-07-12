@@ -2,7 +2,7 @@
 left to right direction
 
 actor "User" as U
-actor "Librarian" as L
+actor "Administrator" as A
 actor "Library System" as S
 
 rectangle "Library Management System" {
@@ -17,7 +17,7 @@ rectangle "Library Management System" {
   usecase "Check Overdue" as UC_Overdue
   usecase "Pay Fines" as UC_Pay
   
-  ' Librarian Use Cases
+  ' Administrator Use Cases
   usecase "Add Book" as UC_Add
   usecase "Remove Book" as UC_Rem
   usecase "Edit Book" as UC_Edit
@@ -37,9 +37,9 @@ U --> UC_Return
 U --> UC_History
 
 ' Librarian interactions
-L --> UC_Add
-L --> UC_Rem
-L --> UC_Edit
+A --> UC_Add
+A --> UC_Rem
+A --> UC_Edit
 
 
 ' System interactions

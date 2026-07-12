@@ -1,8 +1,6 @@
 public class Administrator extends User {
-    static private int adminNo;
-    final private String adminId;
+    static private int adminNo = 1;
     Administrator(String name, String email, String phoneNumber, String password){
-        this.adminId = "ADM-" + adminNo++;
-        super(this.adminId, name, email, phoneNumber, password, "Administrator");
+        super("ADM-" + adminNo++, name, email, phoneNumber, password, "Administrator");
     }
 }

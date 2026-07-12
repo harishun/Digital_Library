@@ -3,16 +3,9 @@ public class Book {
     final private String title;
     final private String author;
     private String genre;
-    private int publicationYear;
+    private Integer publicationYear;
     private boolean isAvailable;
-    Book(String ISBN, String title, String author, String genre){
-        this.ISBN = ISBN;
-        this.title = title;
-        this.author = author;
-        this.genre = genre;
-        this.publicationYear = -1; // Publication year is optional
-        this.isAvailable = true; // By default, a new book is available
-    }
+
     Book(String ISBN, String title, String author, String genre, int publicationYear){
         this.ISBN = ISBN;
         this.title = title;
@@ -41,5 +34,8 @@ public class Book {
     }
     public void setAvailability(boolean availability){
         this.isAvailable = availability;
+    }
+    public String getBookInfo() {
+        return "ISBN: " + this.ISBN + "\nTitle: " + this.title + "\nAuthor: " + this.author + "\nGenre: " + this.genre + "\nYear: " + this.publicationYear + "\nAvailable: " + this.isAvailable;
     }
 }

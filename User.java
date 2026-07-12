@@ -6,6 +6,8 @@ public class User {
     protected String password;
     protected String role;  
     public User(String userId, String name, String email, String phoneNumber, String password, String role){
+        this.userId = userId;
+        this.role = role;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -23,6 +25,9 @@ public class User {
     public String getPhoneNumber(){
         return this.phoneNumber;
     }
+    public String getRole(){
+        return this.role;
+    }
     public String[] authenticate(String password){
         if(this.password.equals(password)){
             return new String[]{this.userId, this.role};
@@ -30,5 +35,8 @@ public class User {
         else{
             return null;
         }
+    }
+    public String getUserInfo(){
+        return "User ID : " + this.userId + "\nName : " + this.name + "\nEmail : " + this.email + "\nPhone Number : " + this.phoneNumber;
     }
 }

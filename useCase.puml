@@ -1,4 +1,4 @@
-@startuml LibraryManagementSystem
+@startuml useCaseDiagram
 left to right direction
 
 actor "User" as U
@@ -11,15 +11,20 @@ rectangle "Library Management System" {
   usecase "Search Catalog" as UC_Search
   usecase "Borrow Book" as UC_Borrow
   usecase "Return Book" as UC_Return
+  usecase "Reserve Book" as UC_Reserve
+  usecase "Renew Book" as UC_Renew
+  usecase "View Borrowing History" as UC_History
+  usecase "Check Overdue" as UC_Overdue
   usecase "Pay Fines" as UC_Pay
   
   ' Librarian Use Cases
-  usecase "Manage Inventory" as UC_Inv
   usecase "Add Book" as UC_Add
   usecase "Remove Book" as UC_Rem
   usecase "Edit Book" as UC_Edit
 
   ' System Use Cases
+  usecase "Process Borrows" as UC_ProcessBorrow
+  usecase "Process Returns" as UC_ProcessReturn
   usecase "Send Notifications" as UC_Notify
   usecase "Generate Reports" as UC_Report
 }
@@ -29,17 +34,24 @@ U --> UC_Reg
 U --> UC_Search
 U --> UC_Borrow
 U --> UC_Return
+U --> UC_History
 
 ' Librarian interactions
-L --> UC_Inv
-UC_Inv ..> UC_Add : <<include>>
-UC_Inv ..> UC_Rem : <<include>>
-UC_Inv ..> UC_Edit : <<include>>
+L --> UC_Add
+L --> UC_Rem
+L --> UC_Edit
+
 
 ' System interactions
+S --> UC_ProcessBorrow
+S --> UC_ProcessReturn 
 S --> UC_Notify
 S --> UC_Report
 
 ' Relationships
-UC_Return ..> UC_Pay : <<extend>>
+UC_Return ..> UC_Overdue : <<include>>
+UC_Overdue ..> UC_Pay : <<extend>>
+
+UC_Borrow ..> UC_Reserve : <<extend>>
+UC_Return ..> UC_Renew : <<extend>>
 @enduml

@@ -3,10 +3,10 @@ public class Book {
     final private String title;
     final private String author;
     private String genre;
-    private Integer publicationYear;
+    final private Integer publicationYear;
     private boolean isAvailable;
 
-    Book(String ISBN, String title, String author, String genre, int publicationYear){
+    Book(String ISBN, String title, String author, int publicationYear, String genre){
         this.ISBN = ISBN;
         this.title = title;
         this.author = author;
@@ -37,5 +37,9 @@ public class Book {
     }
     public String getBookInfo() {
         return "ISBN: " + this.ISBN + "\nTitle: " + this.title + "\nAuthor: " + this.author + "\nGenre: " + this.genre + "\nYear: " + this.publicationYear + "\nAvailable: " + this.isAvailable;
+    }
+
+    public void setGenre(String genre){
+        this.genre = genre;
     }
 }

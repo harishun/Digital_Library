@@ -1,0 +1,55 @@
+@startuml classDiagram
+
+class Book {
+    -String ISBN
+    -String title
+    -String author
+    -String genre
+    -boolean isAvailable
+    +getDetails(): String
+    +updateStatus(boolean): void
+}
+
+class Member {
+    -String memberID
+    -String name
+    -double balance
+    +addFine(double): void
+    +clearBalance(): void
+}
+
+class Librarian {
+    -String librarianID
+    -String name
+    +addBook(Book): void
+    +editBook(Book): void
+    +removeBook(String): void
+}
+
+class Loan {
+    -String loanID
+    -Book book
+    -Member member
+    -Date issueDate
+    -Date dueDate
+    +calculateOverdueDays(): int
+}
+
+class LibrarySystem {
+    -List<Book> books
+    -List<Member> members
+    -List<Loan> loans
+    +searchBook(String): List<Book>
+    +processLoan(Member, Book): void
+    +processReturn(Loan): void
+    +generateReport(): void
+}
+
+LibrarySystem "1" *-- "*" Book : manages
+LibrarySystem "1" *-- "*" Member : manages
+LibrarySystem "1" *-- "*" Loan : tracks
+LibrarySystem "1" *-- "*" Librarian : employs
+
+Loan "1" --> "1" Book : involves
+Loan "1" --> "1" Member : involves
+@enduml

@@ -339,6 +339,9 @@ public class DigitalLibrary {
         System.out.println("\n\n");
     }
 
+    public static void borrowBook(){
+        
+    }
 
     //Implemented Using AI (Gemini Flash-Lite)
     public static void sortBooksByTitle() {

@@ -42,4 +42,12 @@ public class Book {
     public void setGenre(String genre){
         this.genre = genre;
     }
+
+    public void borrowed(){
+        this.isAvailable = false;
+    }
+
+    public void returned(){
+        this.isAvailable = true;
+    }
 }

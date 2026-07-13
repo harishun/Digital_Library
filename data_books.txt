@@ -1,0 +1,6 @@
+978-0132350884|Clean Code|Robert C. Martin|Software Engineering|2008|true
+978-0201633610|Design Patterns|Erich Gamma|Software Engineering|1994|true
+978-0134685991|Effective Java|Joshua Bloch|Education|2018|false
+978-0596007126|Head First Design Patterns|Eric Freeman|Education|2004|true
+978-0201616224|The Pragmatic Programmer|Andrew Hunt|Software Engineering|1999|true
+122-1223787|Harry Potter|JK Rowling|Fantasy|2002|true

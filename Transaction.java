@@ -20,12 +20,12 @@ class Transaction {
     }
 
     public String getTransaction(){
+        //Implemented Using AI (Gemini Flash-Lite)
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String borrowedDateString = (borrowedDate != null) ? borrowedDate.format(formatter) : "Not yet Borrowed";
-        //Implemented Using AI (Gemini Flash-Lite)
         String returnDateString = (returnDate != null) ? returnDate.format(formatter) : "Not yet Returned";
         //Manual
-        return "Transaction ID : " + this.transactionId + "\nBook Title : " + this.book.getTitle() + "\nISBN : " + this.book.getISBN() + "\nMember ID : " + this.member + "\nName : " + this.member.getName() + "\nBorrowed Date : " + borrowedDateString + "\nReturned Date : " + returnDateString + "\nTransaction Status : " + this.transactionStatus;
+        return "Transaction ID : " + this.transactionId + "\nBook Title : " + this.book.getTitle() + "\nISBN : " + this.book.getISBN() + "\nMember ID : " + this.member.getUserId() + "\nName : " + this.member.getName() + "\nBorrowed Date : " + borrowedDateString + "\nReturned Date : " + returnDateString + "\nTransaction Status : " + this.transactionStatus;
     }
 
     public void borrowBook() {
@@ -41,8 +41,30 @@ class Transaction {
         this.book.returned();
     }
 
+    
     public long overdueDays(){
-        long daysBetween = ChronoUnit.DAYS.between(returnDate, estimatedReturnDate);
-        return daysBetween; 
+        LocalDate dateToCompare = (returnDate != null) ? returnDate : LocalDate.now();
+        if (dateToCompare.isAfter(estimatedReturnDate)) {
+            return ChronoUnit.DAYS.between(estimatedReturnDate, dateToCompare);
+        }
+        return 0;
     }
+
+   
+    public String getTransactionId() { return this.transactionId; }
+    public Member getMember() { return this.member; }
+    public Book getBook() { return book; }
+    public String getTransactionStatus() { return transactionStatus; }
+    public LocalDate getBorrowedDate() { return borrowedDate; }
+    public LocalDate getEstimatedReturnDate() { return estimatedReturnDate; }
+    public LocalDate getReturnDate() { return returnDate; }
+
+     // START: Implemented using Antigravity AI (Gemini)
+    public void loadTransactionState(LocalDate borrowedDate, LocalDate estimatedReturnDate, LocalDate returnDate, String status) {
+        this.borrowedDate = borrowedDate;
+        this.estimatedReturnDate = estimatedReturnDate;
+        this.returnDate = returnDate;
+        this.transactionStatus = status;
+    }
+    // END: Implemented using Antigravity AI (Gemini)
 }

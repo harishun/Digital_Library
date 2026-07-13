@@ -1,61 +1,93 @@
 @startuml classDiagram
 
+class User {
+    #String userId
+    #String name
+    #String email
+    #String phoneNumber
+    #String password
+    #String role
+    +authenticate(String): String[]
+    +getUserInfo(): String
+}
+
+class Member {
+    -double balance
+    +addFine(double): void
+    +payFineAmount(double): void
+}
+
+class Administrator {
+}
+
+User <|-- Member
+User <|-- Administrator
+
 class Book {
     -String ISBN
     -String title
     -String author
     -String genre
+    -Integer publicationYear
     -boolean isAvailable
-    +getDetails(): String
-    +updateStatus(boolean): void
-}
-
-class Member {
-    -String memberID
-    -String name
-    -String email
-    -String phoneNumber
-    -String password
-    -double balance
-    +authenticate(String): boolean
-    +addFine(double): void 
-    +clearBalance(): void
-}
-
-class Administrator{
-    -String AdministratorID
-    -String name
-    -String email
-    -String password
-    +addBook(Book): void
-    +editBook(Book): void
-    +removeBook(String): void
+    +getBookInfo(): String
+    +borrowed(): void
+    +returned(): void
 }
 
 class Transaction {
-    -String TransactionID
-    -Book book
+    -String transactionId
     -Member member
-    -Date issueDate
-    -Date dueDate
-    +calculateOverdueDays(): int
+    -Book book
+    -LocalDate borrowedDate
+    -LocalDate estimatedReturnDate
+    -LocalDate returnDate
+    -String transactionStatus
+    +getTransaction(): String
+    +borrowBook(): void
+    +returnBook(): void
+    +overdueDays(): long
+    +loadTransactionState(LocalDate, LocalDate, LocalDate, String): void
 }
 
-class LibrarySystem {
-    -List<Book> books
-    -List<Member> members
-    -List<Loan> loans
-    +searchBook(String): List<Book>
-    +processLoan(Member, Book): void
-    +processReturn(Loan): void
-    +generateReport(): void
+class DigitalLibrary {
+    +{static}users: ArrayList<User>
+    +{static}books: ArrayList<Book>
+    +{static}transactions: ArrayList<Transaction>
+    +{static}currentUser: User
+    +{static}isLoggedIn: boolean
+    +{static}main(String[]): void
+    +{static}registerMember(): void
+    +{static}login(): void
+    +{static}addBook(): void
+    +{static}editBook(): void
+    +{static}deleteBook(): void
+    +{static}adminFunction(): void
+    +{static}memberFunctions(): void
+    +{static}viewProfile(): void
+    +{static}searchBook(): void
+    +{static}searchByTitle(): void
+    +{static}searchByAuthor(): void
+    +{static}searchByYear(): void
+    +{static}searchByGenre(): void
+    +{static}borrowBook(): void
+    +{static}returnBook(): void
+    +{static}payFine(): void
+    +{static}checkNotifications(): void
+    +{static}generateOverdueReport(): void
+    +{static}generateTransactionReport(): void
+    +{static}bootstrapData(): void
+    +{static}saveData(): void
+    +{static}loadData(): void
+    +{static}viewMemberTransactionHistory(): void
+    +{static}sortBooksByTitle(): void
 }
 
-LibrarySystem "1" *-- "*" Book : manages
-LibrarySystem "1" *-- "*" Member : manages
-LibrarySystem "1" *-- "*" Transaction : tracks
-LibrarySystem "1" *-- "*" Administrator : employs
+DigitalLibrary "1" *-- "*" Book : manages
+DigitalLibrary "1" *-- "*" User : manages
+DigitalLibrary "1" *-- "*" Transaction : tracks
 
-Transaction "1" .. "1" Book : involves
-Transaction "1" .. "1" Member : involves
+Transaction "1" o-- "1" Book : involves
+Transaction "1" o-- "1" Member : involves
+
 @enduml

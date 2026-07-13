@@ -1,22 +1,25 @@
 User
 > The User should be able to register and login to the system. 
-> Upon registration , the User should provide their personal details such as name, email, and password.
+> Upon registration, the User should provide their personal details such as name, email, phone number, and password.
 > After successful registration, the user will be provided a user id and the User should be able to login using their email and password.
 > The user should be able to view the list of available books in the library.
 > The user should be able to search for a book by title, author, genre or year.
-> The user should be able to borrow a book if it is available and return it after use.
+> The user should be able to borrow a book if it is available (up to a limit of 3 books, and only if they have no outstanding fines) and return it after use.
+> The user should be able to pay any outstanding overdue fines.
+> The user should be able to view their complete transaction history.
 
-Librarian
+Librarian (Administrator)
 > The Librarian should be able login to the system.
 > The Librarian should be able to add new books to the library's collection by providing details such as title, author, genre, and year of publication.
 > The Librarian should be able to update the details of existing books in the library's collection.
 > The Librarian should be able to remove books from the library's collection.
 > The Librarian should be able to view the list of borrowed books and their due dates.
-> The Librarian should be able to view the status of a user.
+> The Librarian should be able to view the status of a user (User Report).
+> The Librarian should be able to generate reports on all system transactions and active overdue books.
 
 Library Management System
-> The Library Management System should be able to store and manage user information, including personal details and login credentials.
-> The Library Management System should be able to store and manage book information, including title, author, genre, year of publication, and availability status.
-> The Library Management System should be able to track borrowed books, including the user who borrowed the book, the borrowed date, the due date for return, and the status of the book (borrowed or available).
+> The Library Management System should be able to store and manage user information, including personal details, login credentials, and fine balances, persisting them to flat text files.
+> The Library Management System should be able to store and manage book information, including title, author, genre, year of publication, and availability status, persisting them to flat text files.
+> The Library Management System should be able to track borrowed books and transaction status (borrowed date, estimated return date, actual return date, status), persisting them to flat text files.
 > The system should be able to generate reports on borrowed books, overdue books, and user activity.
-> The system should be able to send notifications to users regarding due dates, overdue books, and other relevant information.
+> The system should be able to send notifications to users (displayed upon login) regarding overdue books and outstanding fine balances.

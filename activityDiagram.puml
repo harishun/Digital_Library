@@ -1,0 +1,102 @@
+@startuml activityDiagram
+skinparam BoxPadding 10
+skinparam ParticipantPadding 10
+start
+:User inputs login credentials;
+if (Credentials valid?) then (yes)
+  :Retrieve User from Database;
+  if (Role is Member?) then (yes)
+    :Check Notifications (Overdue books & Fines);
+    if (Has outstanding balance or overdue books?) then (yes)
+      :Display warning notifications;
+    else (no)
+      :Display clean status;
+    endif
+    :Display Member Dashboard;
+    repeat
+      :Prompt User Choice;
+      if (Choice == 1. View Profile) then (yes)
+        :Display Profile Info;
+      elseif (Choice == 2. Search Book) then (yes)
+        :Search book by Title/Author/Year/Genre;
+      elseif (Choice == 3. Borrow Book) then (yes)
+        if (Outstanding Fines > 0?) then (yes)
+          :Print block message (clear fines first);
+        else (no)
+          if (Active Borrows >= 3?) then (yes)
+            :Print borrow limit reached;
+          else (no)
+            :Prompt for Book ISBN;
+            if (Book exists & is available?) then (yes)
+              :Create Transaction (TXN-xxxx);
+              :Call Transaction.borrowBook();
+              :Set Book availability = false;
+              :Save database state to flat files;
+              :Print Borrow Success;
+            else (no)
+              :Print unavailable/not found message;
+            endif
+          endif
+        endif
+      elseif (Choice == 4. Return Book) then (yes)
+        :Prompt for Book ISBN;
+        if (Active borrow transaction exists?) then (yes)
+          :Call Transaction.returnBook();
+          :Set Book availability = true;
+          if (Returned late?) then (yes)
+            :Calculate Overdue Days;
+            :Apply $1.00/day fine to Member balance;
+            :Display penalty message;
+          else (no)
+            :Display returned on time;
+          endif
+          :Save database state to flat files;
+        else (no)
+          :Print no active transaction;
+        endif
+      elseif (Choice == 5. Pay Fine) then (yes)
+        if (Outstanding balance > 0?) then (yes)
+          :Display outstanding balance;
+          :Prompt for payment amount;
+          :Deduct payment from Member balance;
+          :Save database state to flat files;
+          :Display updated balance;
+        else (no)
+          :Display no balance;
+        endif
+      elseif (Choice == 6. View Transaction History) then (yes)
+        :Filter transactions by User ID;
+        :Display member transactions list;
+      endif
+    repeat while (Choice != 0. Logout)
+    :Clear session & logout;
+  else (Administrator)
+    :Display Admin Dashboard;
+    repeat
+      :Prompt User Choice;
+      if (Choice == 1. Generate Inventory Report) then (yes)
+        :Display book collection states;
+      elseif (Choice == 2. Generate User Report) then (yes)
+        :Display system users info;
+      elseif (Choice == 3. Add New Book) then (yes)
+        :Prompt metadata and add to books;
+        :Save database state to flat files;
+      elseif (Choice == 4. Edit Book) then (yes)
+        :Prompt ISBN and change book genre;
+        :Save database state to flat files;
+      elseif (Choice == 5. Delete Book) then (yes)
+        :Prompt ISBN and remove book from books;
+        :Save database state to flat files;
+      elseif (Choice == 6. Generate Overdue Books Report) then (yes)
+        :Display all active overdue transactions;
+      elseif (Choice == 7. Generate Transaction History Report) then (yes)
+        :Display all recorded transactions;
+      endif
+    repeat while (Choice != 0. Logout)
+    :Clear session & logout;
+  endif
+else (no)
+  :Display incorrect login;
+endif
+stop
+@enduml

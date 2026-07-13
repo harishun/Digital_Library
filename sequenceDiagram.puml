@@ -1,0 +1,62 @@
+@startuml sequenceDiagram
+actor Member
+participant "DigitalLibrary" as DL
+participant "m : Member" as M
+participant "b : Book" as B
+participant "newTxn : Transaction" as T
+database "Flat Files" as DB
+
+Member -> DL: Choose "Borrow Book" (Choice 3)
+activate DL
+
+DL -> M: getBalance()
+activate M
+M --> DL: balance
+deactivate M
+
+alt balance > 0
+    DL --> Member: Block borrow (outstanding fines)
+else balance == 0
+    DL -> DL: check active borrows count
+    alt active borrows >= 3
+        DL --> Member: Block borrow (limit reached)
+    else active borrows < 3
+        DL --> Member: Prompt for ISBN
+        Member -> DL: Input ISBN
+        
+        DL -> DL: Find book in books list
+        activate B
+        DL -> B: getISBN()
+        B --> DL: ISBN
+        DL -> B: isAvailable()
+        B --> DL: isAvailable (true)
+        
+        alt Book is available
+            DL -> DL: Generate unique Transaction ID
+            create T
+            DL -> T: new Transaction(transactionId, member, book)
+            DL -> T: borrowBook()
+            activate T
+            T -> B: borrowed()
+            B --> T
+            deactivate B
+            T --> DL
+            deactivate T
+            
+            DL -> DL: Add transaction to transactions list
+            DL -> DL: saveData()
+            activate DL #darkgrey
+            DL -> DB: Write users, books, transactions
+            activate DB
+            DB --> DL
+            deactivate DB
+            deactivate DL
+            
+            DL --> Member: Display borrow success & due date
+        else Book unavailable
+            DL --> Member: Display unavailable message
+        end
+    end
+end
+deactivate DL
+@enduml

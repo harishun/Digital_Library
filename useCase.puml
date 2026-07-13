@@ -11,22 +11,22 @@ rectangle "Library Management System" {
   usecase "Search Catalog" as UC_Search
   usecase "Borrow Book" as UC_Borrow
   usecase "Return Book" as UC_Return
-  usecase "Reserve Book" as UC_Reserve
-  usecase "Renew Book" as UC_Renew
-  usecase "View Borrowing History" as UC_History
-  usecase "Check Overdue" as UC_Overdue
+  usecase "View Transaction History" as UC_History
   usecase "Pay Fines" as UC_Pay
+  usecase "View Profile" as UC_Profile
   
   ' Administrator Use Cases
   usecase "Add Book" as UC_Add
   usecase "Remove Book" as UC_Rem
   usecase "Edit Book" as UC_Edit
+  usecase "Generate Inventory Report" as UC_InvRep
+  usecase "Generate User Report" as UC_UserRep
+  usecase "Generate Overdue Report" as UC_OverdueRep
+  usecase "Generate Transaction Report" as UC_TxnRep
 
   ' System Use Cases
-  usecase "Process Borrows" as UC_ProcessBorrow
-  usecase "Process Returns" as UC_ProcessReturn
-  usecase "Send Notifications" as UC_Notify
-  usecase "Generate Reports" as UC_Report
+  usecase "Send Overdue Notifications" as UC_Notify
+  usecase "Load/Save File Database" as UC_Persist
 }
 
 ' User interactions
@@ -35,23 +35,22 @@ U --> UC_Search
 U --> UC_Borrow
 U --> UC_Return
 U --> UC_History
+U --> UC_Pay
+U --> UC_Profile
 
-' Librarian interactions
+' Administrator interactions
 A --> UC_Add
 A --> UC_Rem
 A --> UC_Edit
-
+A --> UC_InvRep
+A --> UC_UserRep
+A --> UC_OverdueRep
+A --> UC_TxnRep
 
 ' System interactions
-S --> UC_ProcessBorrow
-S --> UC_ProcessReturn 
 S --> UC_Notify
-S --> UC_Report
+S --> UC_Persist
 
 ' Relationships
-UC_Return ..> UC_Overdue : <<include>>
-UC_Overdue ..> UC_Pay : <<extend>>
-
-UC_Borrow ..> UC_Reserve : <<extend>>
-UC_Return ..> UC_Renew : <<extend>>
+UC_Return ....> UC_Pay : <<extend>> (If Overdue)
 @enduml

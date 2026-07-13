@@ -3,4 +3,7 @@ public class Administrator extends User {
     Administrator(String name, String email, String phoneNumber, String password){
         super("ADM-" + adminNo++, name, email, phoneNumber, password, "Administrator");
     }
+    public static void setAdminNo(int nextNo) {
+        adminNo = nextNo;
+    }
 }

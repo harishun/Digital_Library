@@ -12,7 +12,7 @@ public class Book {
         this.author = author;
         this.genre = genre;
         this.publicationYear = publicationYear;
-        this.isAvailable = true; // By default, a new book is available
+        this.isAvailable = true; //a new book is available
     }
     public String getISBN(){
         return this.ISBN;

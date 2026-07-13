@@ -13,21 +13,27 @@ class Book {
 class Member {
     -String memberID
     -String name
+    -String email
+    -String phoneNumber
+    -String password
     -double balance
-    +addFine(double): void
+    +authenticate(String): boolean
+    +addFine(double): void 
     +clearBalance(): void
 }
 
-class Librarian {
-    -String librarianID
+class Administrator{
+    -String AdministratorID
     -String name
+    -String email
+    -String password
     +addBook(Book): void
     +editBook(Book): void
     +removeBook(String): void
 }
 
-class Loan {
-    -String loanID
+class Transaction {
+    -String TransactionID
     -Book book
     -Member member
     -Date issueDate
@@ -47,9 +53,9 @@ class LibrarySystem {
 
 LibrarySystem "1" *-- "*" Book : manages
 LibrarySystem "1" *-- "*" Member : manages
-LibrarySystem "1" *-- "*" Loan : tracks
-LibrarySystem "1" *-- "*" Librarian : employs
+LibrarySystem "1" *-- "*" Transaction : tracks
+LibrarySystem "1" *-- "*" Administrator : employs
 
-Loan "1" --> "1" Book : involves
-Loan "1" --> "1" Member : involves
+Transaction "1" .. "1" Book : involves
+Transaction "1" .. "1" Member : involves
 @enduml

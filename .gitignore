@@ -1,6 +1,19 @@
-/Assessment 2 (Advanced Programming Techniques).pdf
+# Compiled class files
+**/*.class
 *.class
+
+# Persistent library storage files
+AI_Library_System/data/
+Manual_Library_System/data_*.txt
+data_*.txt
+
+# LaTeX temporary output files
 *.aux
 *.log
-*.pdf
 *.synctex.gz
+*.toc
+*.out
+
+# Keep assessment PDF and report PDF
+/Assessment 2 (Advanced Programming Techniques).pdf
+!s17223_Report.pdf

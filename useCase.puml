@@ -26,7 +26,6 @@ rectangle "Library Management System" {
 
   ' System Use Cases
   usecase "Send Overdue Notifications" as UC_Notify
-  usecase "Load/Save File Database" as UC_Persist
 }
 
 ' User interactions
@@ -49,7 +48,6 @@ A --> UC_TxnRep
 
 ' System interactions
 S --> UC_Notify
-S --> UC_Persist
 
 ' Relationships
 UC_Return ....> UC_Pay : <<extend>> (If Overdue)

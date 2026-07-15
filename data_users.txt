@@ -1,5 +1,0 @@
-ADM-1|admin|example@gmail.com|0123456789|admin|Administrator|0.0
-MEM-1|John Doe|example@gmail.com|01233445453|1234|Member|0.0
-MEM-2|David Bosch|example@gmail.com|01233445453|Pass|Member|0.0
-MEM-3|Alice Smith|alice@test.com|0987654321|alicepass|Member|0.0
-MEM-4|Harishun|example@gmail.com|0778788686|1234|Member|0.0

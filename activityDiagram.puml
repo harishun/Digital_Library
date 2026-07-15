@@ -4,7 +4,7 @@ skinparam ParticipantPadding 10
 start
 :User inputs login credentials;
 if (Credentials valid?) then (yes)
-  :Retrieve User from Database;
+  :Retrieve User from in-memory collection;
   if (Role is Member?) then (yes)
     :Check Notifications (Overdue books & Fines);
     if (Has outstanding balance or overdue books?) then (yes)
@@ -18,7 +18,7 @@ if (Credentials valid?) then (yes)
       if (Choice == 1. View Profile) then (yes)
         :Display Profile Info;
       elseif (Choice == 2. Search Book) then (yes)
-        :Search book by Title/Author/Year/Genre;
+        :Search book by Title/Author/Year/Genre (statically);
       elseif (Choice == 3. Borrow Book) then (yes)
         if (Outstanding Fines > 0?) then (yes)
           :Print block message (clear fines first);
@@ -31,7 +31,6 @@ if (Credentials valid?) then (yes)
               :Create Transaction (TXN-xxxx);
               :Call Transaction.borrowBook();
               :Set Book availability = false;
-              :Save database state to flat files;
               :Print Borrow Success;
             else (no)
               :Print unavailable/not found message;
@@ -50,7 +49,6 @@ if (Credentials valid?) then (yes)
           else (no)
             :Display returned on time;
           endif
-          :Save database state to flat files;
         else (no)
           :Print no active transaction;
         endif
@@ -59,7 +57,6 @@ if (Credentials valid?) then (yes)
           :Display outstanding balance;
           :Prompt for payment amount;
           :Deduct payment from Member balance;
-          :Save database state to flat files;
           :Display updated balance;
         else (no)
           :Display no balance;
@@ -80,13 +77,10 @@ if (Credentials valid?) then (yes)
         :Display system users info;
       elseif (Choice == 3. Add New Book) then (yes)
         :Prompt metadata and add to books;
-        :Save database state to flat files;
       elseif (Choice == 4. Edit Book) then (yes)
         :Prompt ISBN and change book genre;
-        :Save database state to flat files;
       elseif (Choice == 5. Delete Book) then (yes)
         :Prompt ISBN and remove book from books;
-        :Save database state to flat files;
       elseif (Choice == 6. Generate Overdue Books Report) then (yes)
         :Display all active overdue transactions;
       elseif (Choice == 7. Generate Transaction History Report) then (yes)

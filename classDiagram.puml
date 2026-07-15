@@ -13,11 +13,23 @@ class User {
 
 class Member {
     -double balance
+    +viewProfile():void
+    {static} +searchBook(ArrayList<Book>): void
+    +viewBorrowedBooks(ArrayList<Transaction>):void
+    +registerMember(): void
     +addFine(double): void
-    +payFineAmount(double): void
+    +borrowBook(ArrayList<Book>) : void
+    +returnBook(ArrayList<Book>) : void
+    +payFine(double) : void
 }
 
 class Administrator {
+    +viewInventory():void
+    +viewUsers():void
+    +addBook(ArrayList<Book>):void
+    +editBook(ArrayList<Book>):void
+    +deleteBook(ArrayList<Book):void
+    +viewTransaction():void
 }
 
 User <|-- Member
@@ -40,47 +52,21 @@ class Transaction {
     -Member member
     -Book book
     -LocalDate borrowedDate
-    -LocalDate estimatedReturnDate
+    -LocalDate dueDate
     -LocalDate returnDate
     -String transactionStatus
     +getTransaction(): String
     +borrowBook(): void
     +returnBook(): void
     +overdueDays(): long
-    +loadTransactionState(LocalDate, LocalDate, LocalDate, String): void
+    +gatTransactionHistory(LocalDate, LocalDate, LocalDate, String): void
 }
 
 class DigitalLibrary {
-    +{static}users: ArrayList<User>
-    +{static}books: ArrayList<Book>
-    +{static}transactions: ArrayList<Transaction>
-    +{static}currentUser: User
-    +{static}isLoggedIn: boolean
-    +{static}main(String[]): void
-    +{static}registerMember(): void
-    +{static}login(): void
-    +{static}addBook(): void
-    +{static}editBook(): void
-    +{static}deleteBook(): void
-    +{static}adminFunction(): void
-    +{static}memberFunctions(): void
-    +{static}viewProfile(): void
-    +{static}searchBook(): void
-    +{static}searchByTitle(): void
-    +{static}searchByAuthor(): void
-    +{static}searchByYear(): void
-    +{static}searchByGenre(): void
-    +{static}borrowBook(): void
-    +{static}returnBook(): void
-    +{static}payFine(): void
-    +{static}checkNotifications(): void
-    +{static}generateOverdueReport(): void
-    +{static}generateTransactionReport(): void
-    +{static}bootstrapData(): void
-    +{static}saveData(): void
-    +{static}loadData(): void
-    +{static}viewMemberTransactionHistory(): void
-    +{static}sortBooksByTitle(): void
+    +ArrayList<User>  users
+    +ArrayList<Book> books 
+    +ArrayList<Transaction> transactions 
+    +User currentUser    
 }
 
 DigitalLibrary "1" *-- "*" Book : manages
